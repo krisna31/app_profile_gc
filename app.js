@@ -1,16 +1,29 @@
+// use strict mode
 'use strict'
-const express = require('express')
-const path = require('path');
 
-const app = express()
+// import necessary libraries
+const express = require('express');
+const { join } = require('path');
 
-app.use(express.static(path.join(__dirname, 'public')));
+// create express app
+const app = express();
 
-app.get('/', (req, res) => {
-    const filePath = path.join(__dirname, 'public/index.html');
-    res.sendFile(filePath);
-  });
-const PORT = process.env.PORT || 8000
+// set up constants
+const PUBLIC_PATH = 'public/index.html';
+const PUBLIC_FOLDER = 'public';
+const ROOT_PATH = '/';
+const DIRNAME = __dirname;
+const PORT = 8080;
+
+// set up middleware
+app.use(express.static(join(DIRNAME, PUBLIC_FOLDER)));
+
+// set up routes
+app.get(ROOT_PATH, (_, res) => {
+    res.sendFile(join(DIRNAME, PUBLIC_PATH));
+});
+
+// start server
 app.listen(PORT, () => {
     console.log(`Server is up and listening at port: ${PORT}`)
 })
